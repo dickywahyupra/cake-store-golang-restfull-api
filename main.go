@@ -16,6 +16,7 @@ import (
 
 func main() {
 	db := database.MysqlConnect()
+	database.Migration(db)
 	validate := validator.New()
 
 	cakeRepository := repository.NewCakeRepository()
