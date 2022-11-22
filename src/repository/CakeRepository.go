@@ -51,6 +51,8 @@ func (repository *CakeRepository) FindById(ctx context.Context, tx *sql.Tx, cake
 	rows, err := tx.QueryContext(ctx, query, cakeId)
 	helper.IfError(err)
 
+	defer rows.Close()
+
 	cake := domain.Cake{}
 
 	if rows.Next() {
@@ -68,6 +70,8 @@ func (repository *CakeRepository) FindAll(ctx context.Context, tx *sql.Tx) []dom
 
 	rows, err := tx.QueryContext(ctx, query)
 	helper.IfError(err)
+
+	defer rows.Close()
 
 	var cakes []domain.Cake
 
