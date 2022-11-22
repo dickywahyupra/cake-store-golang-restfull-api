@@ -9,7 +9,10 @@ import (
 )
 
 func MysqlConnect() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/cake-store")
+	drive := helper.Env("DB_DRIVE")
+	source := helper.Env("DB_USERNAME") + ":" + helper.Env("DB_PASSWORD") + "@tcp(" + helper.Env("DB_HOST") + ":" + helper.Env("DB_PORT") + ")/" + helper.Env("DB_NAME")
+
+	db, err := sql.Open(drive, source)
 	helper.IfError(err)
 
 	db.SetMaxOpenConns(20)
