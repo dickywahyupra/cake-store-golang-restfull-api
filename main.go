@@ -15,6 +15,8 @@ import (
 )
 
 func main() {
+	helper.Log("Server start on " + helper.Env("URL") + " port " + helper.Env("PORT"))
+
 	db := database.MysqlConnect()
 	database.Migration(db)
 	validate := validator.New()
@@ -28,7 +30,7 @@ func main() {
 	handler := cors.AllowAll().Handler(middleware.NewAuthMiddleware(router))
 
 	server := http.Server{
-		Addr:    "localhost:8081",
+		Addr:    helper.Env("URL") + ":" + helper.Env("PORT"),
 		Handler: handler,
 	}
 

@@ -22,6 +22,8 @@ func NewCakeController(cakeService service.CakeServiceInterface) CakeControllerI
 }
 
 func (controller *CakeController) Create(writer http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	helper.Log("POST /api/cakes")
+
 	cakeCreateRequest := request.CakeCreateRequest{}
 	helper.ReadFromRequestBody(req, &cakeCreateRequest)
 
@@ -36,6 +38,8 @@ func (controller *CakeController) Create(writer http.ResponseWriter, req *http.R
 }
 
 func (controller *CakeController) Update(writer http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	helper.Log("POST /api/cakes/{id}")
+
 	cakeUpdateRequest := request.CakeUpdateRequest{}
 	helper.ReadFromRequestBody(req, &cakeUpdateRequest)
 
@@ -56,6 +60,8 @@ func (controller *CakeController) Update(writer http.ResponseWriter, req *http.R
 }
 
 func (controller *CakeController) Delete(writer http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	helper.Log("POST /api/cakes/{id}")
+
 	cakeId := params.ByName("id")
 	id, err := strconv.Atoi(cakeId)
 	helper.IfError(err)
@@ -70,6 +76,8 @@ func (controller *CakeController) Delete(writer http.ResponseWriter, req *http.R
 }
 
 func (controller *CakeController) FindById(writer http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	helper.Log("POST /api/cakes/{id}")
+
 	cakeId := params.ByName("id")
 	id, err := strconv.Atoi(cakeId)
 	helper.IfError(err)
@@ -85,6 +93,8 @@ func (controller *CakeController) FindById(writer http.ResponseWriter, req *http
 }
 
 func (controller *CakeController) FindAll(writer http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	helper.Log("POST /api/cakes/{id}")
+
 	cakeResponses := controller.CakeService.FindAll(req.Context())
 	apiResponse := response.ApiResponse{
 		Code:   200,
