@@ -2,6 +2,7 @@ package service
 
 import (
 	"cake-store-golang-restfull-api/helper"
+	"cake-store-golang-restfull-api/src/exception"
 	"cake-store-golang-restfull-api/src/model/domain"
 	"cake-store-golang-restfull-api/src/model/request"
 	"cake-store-golang-restfull-api/src/model/response"
@@ -57,7 +58,9 @@ func (service *CakeService) Update(ctx context.Context, request request.CakeUpda
 	defer helper.CommitOrRollback(tx)
 
 	cake, err := service.CakeRepository.FindById(ctx, tx, request.Id)
-	helper.IfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	cake.Title = request.Title
 	cake.Description = request.Description
@@ -76,7 +79,9 @@ func (service *CakeService) Delete(ctx context.Context, cakeId int) {
 	defer helper.CommitOrRollback(tx)
 
 	_, err = service.CakeRepository.FindById(ctx, tx, cakeId)
-	helper.IfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	service.CakeRepository.Delete(ctx, tx, cakeId)
 }
@@ -88,7 +93,9 @@ func (service *CakeService) FindById(ctx context.Context, cakeId int) response.C
 	defer helper.CommitOrRollback(tx)
 
 	cake, err := service.CakeRepository.FindById(ctx, tx, cakeId)
-	helper.IfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return helper.ToCakeResponse(cake)
 }

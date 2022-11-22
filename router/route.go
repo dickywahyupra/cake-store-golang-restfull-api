@@ -2,6 +2,7 @@ package router
 
 import (
 	"cake-store-golang-restfull-api/src/controller"
+	"cake-store-golang-restfull-api/src/exception"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -15,6 +16,8 @@ func GetRoute(cakeController controller.CakeControllerInterface) *httprouter.Rou
 	router.POST(prefix+"/cakes", cakeController.Create)
 	router.PUT(prefix+"/cakes/:id", cakeController.Update)
 	router.DELETE(prefix+"/cakes/:id", cakeController.Delete)
+
+	router.PanicHandler = exception.ErrorHandler
 
 	return router
 }
