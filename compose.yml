@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+    application:
+        container_name: cake-store-restfull-api
+        image: cake-store-api:latest
+        env_file:
+            - ./.env
+        ports:
+            - "${PORT}:8081"
+        volumes:
+            - ./:/app
+        networks:
+            - cake-store-net
+        links:
+            - mariadb
+        depends_on:
+            - mariadb
+    mariadb:
+        container_name: cake-store-mariadb
+        image: mariadb:10.3
+        env_file:
+            - ./.env
+        restart: always
+        networks:
+            - cake-store-net
+        ports:
+            - "${MARIADB_PORT}:3306"
+        environment:
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_DATABASE: ${DB_NAME}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - ./data/db:/var/lib/mysql
+networks:
+    cake-store-net: {}

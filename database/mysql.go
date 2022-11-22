@@ -15,10 +15,15 @@ func MysqlConnect() *sql.DB {
 	db, err := sql.Open(drive, source)
 	helper.IfError(err)
 
+	err = db.Ping()
+	helper.IfError(err)
+
 	db.SetMaxOpenConns(20)
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(60 * time.Minute)
 	db.SetConnMaxIdleTime(10 * time.Minute)
+
+	helper.Log("Success connect to database")
 
 	return db
 }
