@@ -1,21 +1,6 @@
-version: '3.7'
+version: '3.4'
 
 services:
-    application:
-        container_name: cake-store-restfull-api
-        image: cake-store-api:latest
-        env_file:
-            - ./.env
-        ports:
-            - "${PORT}:8081"
-        volumes:
-            - ./:/app
-        networks:
-            - cake-store-api-net
-        links:
-            - mariadb
-        depends_on:
-            - mariadb
     mariadb:
         container_name: cake-store-mariadb
         image: mariadb:10.3

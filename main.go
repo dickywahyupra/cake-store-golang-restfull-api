@@ -30,7 +30,8 @@ func main() {
 	handler := cors.AllowAll().Handler(middleware.NewAuthMiddleware(router))
 
 	server := http.Server{
-		Addr:    helper.Env("URL") + ":" + helper.Env("PORT"),
+		Addr: helper.Env("URL") + ":" + helper.Env("PORT"),
+		// Addr:    "localhost:8081",
 		Handler: handler,
 	}
 

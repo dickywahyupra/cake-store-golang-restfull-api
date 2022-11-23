@@ -10,10 +10,12 @@ RUN go mod download
 
 COPY *.go ./
 
+RUN mkdir -p mysql && chmod -R 777 mysql/
+
 COPY . .
 
 RUN go build -o /cake-store-api
 
-EXPOSE 8001
+# EXPOSE 8081
 
 CMD [ "/cake-store-api" ]
